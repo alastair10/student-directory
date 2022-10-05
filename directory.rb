@@ -1,3 +1,4 @@
+=begin 
 student_count = 11
 #first let's put all students into an array
 students = [
@@ -13,6 +14,7 @@ students = [
   {name: "Joffrey Baratheon", cohort: :november},
   {name: "Norman Bates", cohort: :november}
 ]
+=end 
 
 def input_students
   puts "Please enter the names of the students"
