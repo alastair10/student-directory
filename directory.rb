@@ -28,8 +28,7 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    #@students << {name: name, cohort: :november}
-    load_hash
+    @students << {name: name, cohort: :november}
     puts "Now we have #{@students.count} students"
     # get another name from the user
     name = STDIN.gets.chomp
@@ -45,8 +44,7 @@ def load_students(filename = "students.csv")
   # parallel assignment - if the value is array, first var will get first value, second var will get second value, etc.
   name, cohort = line.chomp.split(',')
   # assign the name and cohort variables and put into a new hash
-   # @students << {name: name, cohort: cohort.to_sym}
-    load_hash
+    @students << {name: name, cohort: cohort.to_sym}
   end
   puts "File load complete."
   file.close
