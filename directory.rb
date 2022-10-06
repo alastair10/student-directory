@@ -24,20 +24,21 @@ def input_students
   # creates an empty array
   students = []
   # get the first name
-  name = gets.chomp
+  name = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
     @students << {name: name, cohort: :november}
     puts "Now we have #{@students.count} students"
     # get another name from the user
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 end
 
-def load_students
+# passing the filename as an argument so it accepts arbitrary filenames, if none, defauly is students.csv
+def load_students(filename = "students.csv")
   # open the file
-  file = File.open("students.csv", "r")
+  file = File.open(filename, "r")
   # read all the lines into an array and iterate over it
   file.readlines.each do |line|
   # parallel assignment - if the value is array, first var will get first value, second var will get second value, etc.
@@ -46,6 +47,18 @@ def load_students
     @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
+end
+
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exist?(filename) # if it exists
+    load_students(filename)
+      puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit program
+  end
 end
 
 def save_students
@@ -65,7 +78,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -85,18 +98,18 @@ end
 
 def process(selection)
   case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "3"
-      save_students
-    when "4"
-        load_students
-    when "9"
-      exit # causes program to terminate
-    else
-      puts "I don't know what you meant, try again"
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "3"
+    save_students
+  when "4"
+    load_students
+  when "9"
+    exit # causes program to terminate
+  else
+    puts "I don't know what you meant, try again"
   end
 end
 
@@ -116,4 +129,5 @@ def print_footer
 end
 
 #nothing happents until we call the methods
+try_load_students
 interactive_menu
